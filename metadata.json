@@ -1,22 +1,39 @@
 {
-  "name": "",
-  "displayName": "",
-  "description": "",
-  "url": "",
+  "name": "SITC2026 S17 - Module B",
+  "displayName": "SwapLoop Admin SSR Application",
+  "description": "Build a server-rendered SwapLoop administration console for a fictional Shanghai e-bike battery swapping and monitored charging pilot. Implement staff auth with role scoping, community enrolment, station lifecycle, Station Service–backed live capacity, battery quarantine/retire, incident resolution, partner priority windows, and a funding/rollout dashboard against a compact admin database seed — independently of Module C.",
+  "url": "https://github.com/marketable-it-skills/s17-sitc2026-module-b",
   "skillDomainIds": [
     1
   ],
   "languages": [
     "EN"
   ],
-  "competition": "",
+  "competition": "Skills IT Training Camp 2026",
   "estTime": 3,
   "authors": [
     {
-      "name": "",
-      "url": ""
+      "name": "Janos Hidvegi",
+      "url": "https://www.linkedin.com/in/j%C3%A1nos-hidv%C3%A9gi-3b19591b1/"
     }
   ],
-  "technologies": [],
-  "tags": []
+  "technologies": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Server-Side Rendering",
+    "SQL",
+    "MySQL"
+  ],
+  "tags": [
+    "backend",
+    "server-side rendering",
+    "authentication",
+    "authorization",
+    "admin dashboard",
+    "mysql",
+    "station-service",
+    "battery-safety",
+    "funding-dashboard"
+  ]
 }

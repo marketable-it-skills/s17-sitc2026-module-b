@@ -1,7 +1,7 @@
 {
   "name": "SITC2026 S17 - Module B",
   "displayName": "SwapLoop Admin SSR Application",
-  "description": "Build a server-rendered SwapLoop administration console for a fictional Shanghai e-bike battery swapping and monitored charging pilot. Implement staff auth with role scoping, community enrolment, station lifecycle, Station Service–backed live capacity, battery quarantine/retire, incident resolution, partner priority windows, and a funding/rollout dashboard against a compact admin database seed — independently of Module C.",
+  "description": "Build a server-rendered SwapLoop administration console for a fictional Shanghai e-bike battery swapping and monitored charging pilot. Implement staff auth with role scoping, community enrolment, station lifecycle, Station Service–backed live capacity, battery quarantine/retire, incident resolution, partner priority windows, and a funding/rollout dashboard against a compact admin database seed.",
   "url": "https://github.com/marketable-it-skills/s17-sitc2026-module-b",
   "skillDomainIds": [
     1

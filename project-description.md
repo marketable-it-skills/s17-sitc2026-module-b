@@ -8,13 +8,13 @@ Competitors will have **3 hours** to complete this module.
 
 SwapLoop is a fictional Shanghai community pilot exploring safer alternatives to charging e-bike batteries indoors. Compatible delivery and private e-bikes exchange removable batteries at swap stations; e-bikes with integrated batteries use monitored charging bays; delivery partners can receive controlled priority access; and operators and safety inspectors manage sites, assets, and incidents.
 
-This competition does **not** ask for a finished production platform. Across the modules you build **working prototypes** of selected parts of SwapLoop. This module is the **operator / safety / funding console**: a server-rendered administration application that enrols communities, manages station lifecycle, reviews battery health and incidents, configures delivery-partner priority windows, and tracks grant / co-funding / rollout progress.
+This competition does **not** ask for a finished production platform. This module is a **working prototype** of the **operator / safety / funding console**: a server-rendered administration application that enrols communities, manages station lifecycle, reviews battery health and incidents, configures delivery-partner priority windows, and tracks grant / co-funding / rollout progress.
 
-Module B must run **independently of Module C (Main Backend)**. It reads and writes a compact admin-oriented database seed and queries **live technical state** from the provided **Station Service**. It must not depend on Module C REST endpoints, QR reservation flows, or SPA rider journeys.
+The application must run **independently**. It reads and writes a compact admin-oriented database seed and queries **live technical state** from the provided **Station Service**. It must not implement or depend on rider-facing REST APIs, QR reservation flows, or SPA rider journeys.
 
 ## General Description of Project and Tasks
 
-Implement an independently runnable SSR administration application. Assessors must be able to mark it without a running Module C. Predictable role scoping, clear form validation, and honest operational state (including degraded Station Service mode) are essential.
+Implement an independently runnable SSR administration application. Assessors must be able to mark it using only the admin seed and Station Service. Predictable role scoping, clear form validation, and honest operational state (including degraded Station Service mode) are essential.
 
 The following is a high-level overview of the required capabilities; detailed specifications are in the [Requirements](#requirements) section:
 
@@ -46,15 +46,15 @@ The supplied assets are intended to be complete for marking and use only determi
 
 - Use `Asia/Shanghai` as the business timezone. Display and store timestamps as ISO 8601 strings with an explicit offset where shown in detail views.
 - Persist administrative state in the admin database. Live bay / slot / charging-unit / battery telemetry must be refreshed from the Station Service, not invented in the UI.
-- Do **not** call Module C `/api/v1/*` rider endpoints. Shared fiction and identifiers (`station-001`, community ids, partner ids) should align with Module C where both exist, but schemas remain separate.
-- Do **not** expose Module C’s QR identifiers, reservation state machines, idempotency keys, or service-session internals as primary admin entities. Prefer direct operator-oriented status fields from the admin seed and Station Service.
+- Do **not** call external rider-facing REST APIs. Prefer the identifiers and status fields supplied in the admin seed and Station Service.
+- Do **not** model QR reservation flows, idempotency keys, or rider service-session internals as primary admin entities. Prefer direct operator-oriented status fields from the admin seed and Station Service.
 - Role-based authorization must protect every mutating form. Suspended staff accounts cannot sign in.
 - Server-side validation must produce clear field errors. Prefer accessible forms and tables (labels, focus order, colour-independent status).
 - Real payment processing, real government integrations, real IoT hardware control, machine learning, electrochemical simulation, OAuth / SSO, email verification, and complex password-reset flows are out of scope.
 
 ### Physical vocabulary
 
-Use the same physical vocabulary as the SwapLoop system description and sibling modules:
+Use this physical vocabulary consistently:
 
 | Term | Meaning |
 | ---- | ------- |
@@ -85,7 +85,7 @@ Compatibility catalog (do not invent parallel connector codes):
 | `SAFETY_INSPECTOR` | Incident review, quarantine / retirement decisions, inspection notes and resolution |
 | `PARTNER_OPERATOR` | Optional; limited to their delivery partner’s priority windows and co-funding context — never bypasses safety rules |
 
-Riders and SPA self-registration are **out of Module B scope**. Fleet courier accounts may be listed for partner context but are not provisioned through Module D.
+Rider self-registration and rider-facing SPA flows are **out of scope**. Fleet courier accounts may be listed for partner context but are not provisioned in this module.
 
 ## Requirements
 
@@ -94,7 +94,7 @@ The SwapLoop admin application shall implement the behaviours below.
 ### Staff sign-in and role scoping
 
 1. Staff signs in with email/password (or the seed credentials in the authentication handout) against the admin database.
-2. The session is server-side (cookie/session). No OAuth and no Module C bearer token are required.
+2. The session is server-side (cookie/session). No OAuth and no external bearer-token API are required.
 3. Navigation and mutations are role-scoped (own stations / communities / partner only where assigned).
 4. Suspended staff accounts cannot sign in.
 5. Provide a clear signed-in shell with role-aware navigation, plus explicit access-denied and empty states.
@@ -147,7 +147,7 @@ Operators and inspectors manage the tracked battery fleet:
 - Quarantine and retire actions must remove or flag batteries so they are not presented as healthy fleet assets.
 - Optional CSV import of historical telemetry or fleet snapshots if provided in assets.
 
-Module B may display health results and apply administrative quarantine / retire actions. Full telemetry ingest and health computation for the rider API remain Module C’s competition core; Module B uses Station Service readings and/or admin seed fields so it stays independently markable.
+The application may display health results and apply administrative quarantine / retire actions. It uses Station Service readings and/or admin seed fields for health display and fleet actions; full telemetry ingest pipelines for a rider API are out of scope.
 
 ### Incidents and inspection
 
@@ -165,7 +165,7 @@ Module B may display health results and apply administrative quarantine / retire
 
 ### Funding and rollout dashboard
 
-Module B owns funding / rollout analytics (explicitly **not** Module C database scope):
+This module owns funding / rollout analytics in the admin database:
 
 | In | Out |
 | -- | --- |
@@ -212,11 +212,10 @@ Expected entity groups (names may be adjusted to the provided seed):
 
 The seed should include communities in multiple enrolment states (including **not yet covered**), at least one **suspended** station, batteries across health bands, and at least one open incident suitable for inspector marking. Provide a deterministic restore path (script or documented import) for assessment.
 
-### Independence from Module C
+### Independence
 
-- No hard dependency on Module C being deployed.
-- No requirement to call Module C rider endpoints.
-- Shared fiction and identifiers should align with Module C seeds where both exist, but schemas remain separate.
+- Markable using only the provided admin seed and Station Service.
+- No requirement to call external rider-facing APIs or a separate main backend.
 
 ### Delivery priority
 
@@ -239,7 +238,7 @@ At minimum, assessors will verify that:
 - a partner priority window can be created/edited for a station without implying a safety bypass
 - grant dependency ratio is computed from funding inputs, not stored as an arbitrary editable score
 - the rollout dashboard shows coverage / dependency / incident trends against targets
-- Module B runs against its admin seed + Station Service without requiring Module C
+- the application runs against its admin seed + Station Service without external backend dependencies
 - UI vocabulary matches SwapLoop Station / Battery Swap Cabinet / Battery Slot / E-bike Charging Bay
 - CSV import (when provided) validates rows and reports actionable errors without corrupting existing seed data
 - forms use server-side validation and basic OWASP-minded protections appropriate to an SSR admin (e.g. CSRF on mutating forms, escaped output, parameterized queries / ORM)
@@ -259,12 +258,12 @@ The following is a draft distribution. Final criterion-level points must be defi
 
 ## Out of scope
 
-- Rider SPA flows (Module D)
-- Main Backend reservation / QR / idempotent swap-confirm APIs (Module C)
+- Rider-facing SPA flows
+- Rider reservation / QR / idempotent swap-confirm APIs
 - Real payment processing and real government integrations
 - Physical lock / charger control and real IoT devices
-- Camera-based QR scanning (competition QR emulator is a Module D concern)
-- Citywide interactive map / motion storytelling (Module E)
-- Campaign marketing site (Module F)
+- Camera-based QR scanning
+- Citywide interactive map / motion storytelling
+- Campaign marketing site
 - OAuth / SSO / email verification / password reset complexity beyond simple staff login
 - Scoring or ranking of people or businesses

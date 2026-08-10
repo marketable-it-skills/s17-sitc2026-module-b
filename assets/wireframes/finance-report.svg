@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" role="img" aria-label="finance-report">
+<title>finance-report — SwapLoop Admin wireframe</title>
+<rect x="0" y="0" width="960" height="640" rx="0" fill="#f4f4f1" stroke="none" stroke-width="1.5"/>
+<rect x="0" y="0" width="960" height="52" rx="0" fill="#ffffff" stroke="#333333" stroke-width="1"/>
+<text x="20" y="32" font-size="16" font-weight="700" fill="#2c5f4a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">SwapLoop Admin</text>
+<text x="940" y="32" font-size="12" font-weight="normal" fill="#666666" text-anchor="end" font-family="ui-sans-serif, system-ui, sans-serif">Zhou Qing · ACCOUNTANT</text>
+<rect x="0" y="52" width="180" height="588" rx="0" fill="#ffffff" stroke="#333333" stroke-width="1"/>
+<text x="24" y="76" font-size="13" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Dashboard</text>
+<rect x="12" y="94" width="156" height="28" rx="4" fill="#e8ebe6" stroke="none" stroke-width="1.5"/>
+<text x="24" y="110" font-size="13" font-weight="600" fill="#2c5f4a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Finance report</text>
+<rect x="20" y="584" width="140" height="32" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+<text x="90.0" y="604.0" font-size="12" font-weight="600" fill="#1a1a1a" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">Sign out</text>
+<text x="200" y="90" font-size="22" font-weight="700" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Finance report</text>
+<text x="200" y="118" font-size="11" font-weight="normal" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Period</text>
+<rect x="200" y="126" width="120" height="28" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+<text x="210" y="144.0" font-size="12" font-weight="normal" fill="#999999" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">2026-08</text>
+<rect x="340" y="126" width="90" height="28" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+<text x="385.0" y="144.0" font-size="12" font-weight="600" fill="#1a1a1a" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">Refresh</text>
+<rect x="440" y="126" width="130" height="28" rx="2" fill="#2c5f4a" stroke="#2c5f4a" stroke-width="1.5"/>
+<text x="505.0" y="144.0" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">Export CSV</text>
+<rect x="200" y="175" width="736" height="32" rx="2" fill="#e8ebe6" stroke="#333333" stroke-width="1.5"/>
+<text x="208.0" y="196" font-size="11" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Partner</text>
+<text x="300.0" y="196" font-size="11" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Uses</text>
+<text x="392.0" y="196" font-size="11" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Overage</text>
+<text x="484.0" y="196" font-size="11" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Base</text>
+<text x="576.0" y="196" font-size="11" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Overage ¥</text>
+<text x="668.0" y="196" font-size="11" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Disc %</text>
+<text x="760.0" y="196" font-size="11" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Disc ¥</text>
+<text x="852.0" y="196" font-size="11" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Total</text>
+<rect x="200" y="207" width="736" height="32" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+<text x="208.0" y="228" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">BlueCrane Courier</text>
+<text x="300.0" y="228" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="392.0" y="228" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="484.0" y="228" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="576.0" y="228" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="668.0" y="228" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="760.0" y="228" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="852.0" y="228" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<rect x="200" y="239" width="736" height="32" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+<text x="208.0" y="260" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">NightOwl Riders</text>
+<text x="300.0" y="260" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="392.0" y="260" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="484.0" y="260" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="576.0" y="260" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="668.0" y="260" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="760.0" y="260" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="852.0" y="260" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<rect x="200" y="271" width="736" height="32" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+<text x="208.0" y="292" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">RedPanda Logistics</text>
+<text x="300.0" y="292" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="392.0" y="292" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="484.0" y="292" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="576.0" y="292" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="668.0" y="292" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="760.0" y="292" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="852.0" y="292" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<rect x="200" y="303" width="736" height="32" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+<text x="208.0" y="324" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">SwiftRice Delivery</text>
+<text x="300.0" y="324" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="392.0" y="324" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="484.0" y="324" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="576.0" y="324" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="668.0" y="324" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="760.0" y="324" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<text x="852.0" y="324" font-size="12" font-weight="normal" fill="#1a1a1a" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">…</text>
+<rect x="200" y="360" width="736" height="200" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+<text x="216" y="384" font-size="12" font-weight="600" fill="#666666" text-anchor="start" font-family="ui-sans-serif, system-ui, sans-serif">Total (CNY) by partner</text>
+<rect x="260" y="454" width="70" height="66" rx="2" fill="#e8ebe6" stroke="#2c5f4a" stroke-width="1.5"/>
+<text x="295.0" y="538" font-size="10" font-weight="normal" fill="#666666" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">BlueCrane</text>
+<rect x="370" y="478" width="70" height="42" rx="2" fill="#e8ebe6" stroke="#2c5f4a" stroke-width="1.5"/>
+<text x="405.0" y="538" font-size="10" font-weight="normal" fill="#666666" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">NightOwl</text>
+<rect x="480" y="418" width="70" height="102" rx="2" fill="#e8ebe6" stroke="#2c5f4a" stroke-width="1.5"/>
+<text x="515.0" y="538" font-size="10" font-weight="normal" fill="#666666" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">RedPanda</text>
+<rect x="590" y="442" width="70" height="78" rx="2" fill="#e8ebe6" stroke="#2c5f4a" stroke-width="1.5"/>
+<text x="625.0" y="538" font-size="10" font-weight="normal" fill="#666666" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">SwiftRice</text>
+<line x1="240" y1="520" x2="916" y2="520" stroke="#333333" stroke-width="1"/>
+</svg>

@@ -1,6 +1,6 @@
 # SwapLoop Admin SSR Application
 
-Build a server-rendered administration console for SwapLoop, a fictional Shanghai e-bike battery swapping and monitored charging pilot. The task focuses on role-scoped operator workflows, station lifecycle, Station Service–backed live capacity, battery safety actions, incidents, and funding/rollout progress.
+Build a server-rendered administration console for SwapLoop, a fictional Shanghai e-bike battery swapping and monitored charging pilot. The task covers staff auth with fixed roles, CRUD for stations, units, partners and drivers, billing from usage events and subscription plans, and an accountant finance report with table, native chart, and CSV.
 
 ## Skill domain(s)
 

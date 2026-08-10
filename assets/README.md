@@ -1,38 +1,16 @@
 # Module B assets
 
-Competitor-facing assets for the SwapLoop Admin SSR application. Paths below match `project-description.md`. Files marked **TODO** are not yet in this repository and must be supplied before competition use.
+| Path | Purpose |
+| ---- | ------- |
+| [`db/swaploop_admin.sql`](./db/swaploop_admin.sql) | MySQL seed (`swaploop_admin`) — import before running the app |
+| [`wireframes/`](./wireframes/) | Screen wireframes (SVG) referenced by the project description |
 
-## Planned layout
+## Database seed
 
-```text
-assets/
-  data/
-    module-b-seed/          # compact swaploop_admin MySQL seed + manifest
-    imports/                # optional CSV samples (communities, stations, telemetry)
-  handouts/
-    handout-authentication-and-roles.md
-    handout-station-service.md
-    handout-battery-health.md
-  station-service/          # runnable mock Station Service (live technical status)
-```
+- Staff password for every seeded account: `password123` (bcrypt hashes in dump)
+- Two subscription plans with different discount tiers; partners assigned across both
+- Individual `usage_events` for July and August 2026 — aggregate by calendar month (`Asia/Shanghai`) for billing
 
-## Included now
+## Wireframes
 
-- Placeholder directories only (this README and `.gitkeep` files).
-
-## Still required (TODO)
-
-| Asset | Purpose |
-| ----- | ------- |
-| `data/module-b-seed/` | Compact admin schema seed with staff, communities (incl. not yet covered), stations (incl. suspended), batteries across health bands, open incident, partners, funding ledger |
-| `data/imports/` | Optional CSV import samples and invalid-row cases |
-| `handouts/handout-authentication-and-roles.md` | Seed staff credentials and role/assignment rules |
-| `handouts/handout-station-service.md` | Base URL, endpoints, degraded-mode behaviour |
-| `handouts/handout-battery-health.md` | Health-band table + thermal-anomaly override |
-| `station-service/` | Independently runnable mock exposing live station / slot / bay / battery technical status |
-
-## Alignment notes
-
-- The application must remain markable with **admin seed + Station Service only**.
-- Physical vocabulary: SwapLoop Station, Battery Swap Cabinet, Battery Slot, E-bike Charging Bay.
-- Compatibility labels: `SL-48` / `SL-60`, `GB-AC-48` / `GB-AC-60` (do not invent parallel codes).
+Sixteen SVG screens under [`wireframes/`](./wireframes/). See that folder’s README for the file list.

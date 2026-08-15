@@ -6,35 +6,20 @@ Competitors will have **3 hours** to complete this module.
 
 ## Introduction
 
-SwapLoop is a fictional Shanghai community pilot that offers safer alternatives to charging e-bike batteries indoors. Riders exchange compatible removable batteries at swap stations, or charge e-bikes with integrated batteries in monitored **E-bike Charging Bays**. Some stations offer only one service; **hybrid** stations offer both.
+SwapLoop is a fictional service for safer charging of electric bikes in Shanghai. It helps avoid charging e-bike batteries in apartments, corridors, or other unsuitable places — which previously led to serious fires.
 
-This competition builds **working prototypes**, not a finished production platform. **Module B** is the **administration console**: a server-rendered (SSR) web application for platform staff, station operators, delivery-fleet managers, and accountants.
+SwapLoop stations offer:
+
+- **Battery swap** for electric bikes with a compatible, removable battery.
+- **E-bike charging bays** for electric bikes with a built-in battery.
+
+Some stations provide only one of these services; hybrid stations provide both.
+
+The service has two target groups: **individual users** and **delivery company employees** (couriers). Both use the same station services; courier accounts are managed through their delivery partner rather than self-registration.
+
+In **Module B** you have to build **working prototypes** of the **administration console**: a server-rendered (SSR) web application for platform staff, station operators, delivery-fleet managers, and accountants.
 
 Build the application against the provided MySQL seed in [`assets/db/swaploop_admin.sql`](./assets/db/swaploop_admin.sql). Follow the screen structure in [`assets/wireframes/`](./assets/wireframes/).
-
-### Physical vocabulary
-
-| Term | Meaning |
-| ---- | ------- |
-| **SwapLoop Station** | Full service location (`SWAP`, `CHARGING`, or `HYBRID`) |
-| **Battery Slot** | One compartment that holds at most one swappable battery (`SWAP_BAY`) |
-| **E-bike Charging Bay** | Bay that charges a whole e-bike with an integrated battery (`BIKE_BAY`) |
-
-Compatibility codes used in the seed:
-
-- Swappable units: `battery_type` `SL-48` or `SL-60`
-- Charging bays: `connector_type` `GB-AC-48` or `GB-AC-60`
-
-### Roles
-
-| Role | Responsibility |
-| ---- | -------------- |
-| `PLATFORM_ADMIN` | Operates the whole network: staff, stations, units, partners, drivers, billing, and finance |
-| `FLEET_MANAGER` | Manages drivers and billing for their own delivery partner |
-| `STATION_ADMIN` | Manages only stations (and units) they are assigned to |
-| `ACCOUNTANT` | Views network finance summaries and exports the finance CSV |
-
-Enforce these scopes on every list and mutation. Hiding a control is not enough if the underlying action still succeeds.
 
 ## General Description of Project and Tasks
 
@@ -43,31 +28,43 @@ Implement an independently runnable SSR admin application that covers:
 1. Staff authentication and a role-aware application shell
 2. Staff user management for platform admins
 3. Stations and units CRUD with lifecycle and compatibility rules
-4. Delivery partners and fleet drivers CRUD
+4. Delivery partners and drivers CRUD
 5. Partner billing summaries derived from usage events and subscription plans
 6. Accountant finance report with a table, a bar chart, and CSV export
 
 ### Environment and provided assets
 
 - Use a server-side language and framework available in the competition environment. Pages are **server-rendered HTML**. Client-side script is allowed for the finance chart, built without third-party chart libraries.
-- Import [`assets/db/swaploop_admin.sql`](./assets/db/swaploop_admin.sql) (database `swaploop_admin`).
+- Import [`assets/db/swaploop_admin.sql`](./assets/db/swaploop_admin.sql).
 - Match layout and field placement to [`assets/wireframes/`](./assets/wireframes/).
 - Business timezone: `Asia/Shanghai`. Billing months are calendar months in that timezone.
-- Seeded staff password (all accounts): `password123`. Hashes in the seed are bcrypt; you may re-hash to match your stack if you update the seed accordingly.
 
-Deployed assessment URL pattern: `https://cXX-YYYY-module-b.sitc.skillsit.eu` (your competition username and PIN).
+### Physical vocabulary
+
+| Term                    | Meaning                                                                 |
+| ----------------------- | ----------------------------------------------------------------------- |
+| **SwapLoop Station**    | Full service location (`SWAP`, `CHARGING`, or `HYBRID`)                 |
+| **Battery Slot**        | One compartment that holds at most one swappable battery (`SWAP_BAY`)   |
+| **E-bike Charging Bay** | Bay that charges a whole e-bike with an integrated battery (`BIKE_BAY`) |
+
+Compatibility codes used in the seed:
+
+- Swappable units: `battery_type` `SL-48` or `SL-60`
+- Charging bays: `connector_type` `GB-AC-48` or `GB-AC-60`
 
 ### Seeded staff accounts
 
-| Email | Role | Notes |
-| ----- | ---- | ----- |
-| `admin@swaploop.test` | `PLATFORM_ADMIN` | Full access |
-| `fleet.swift@swaploop.test` | `FLEET_MANAGER` | Partner SwiftRice Delivery |
-| `fleet.blue@swaploop.test` | `FLEET_MANAGER` | Partner BlueCrane Courier |
-| `station.east@swaploop.test` | `STATION_ADMIN` | Assigned to Haitang Garden East Gate |
-| `station.canal@swaploop.test` | `STATION_ADMIN` | Assigned to Canal View Delivery Hub |
-| `accountant@swaploop.test` | `ACCOUNTANT` | Finance only |
-| `suspended.admin@swaploop.test` | `PLATFORM_ADMIN` | Suspended — sign-in must fail |
+| Email                           | Role             | Notes                                |
+| ------------------------------- | ---------------- | ------------------------------------ |
+| `admin@swaploop.test`           | `PLATFORM_ADMIN` | Full access                          |
+| `fleet.swift@swaploop.test`     | `FLEET_MANAGER`  | Partner SwiftRice Delivery           |
+| `fleet.blue@swaploop.test`      | `FLEET_MANAGER`  | Partner BlueCrane Courier            |
+| `station.east@swaploop.test`    | `STATION_ADMIN`  | Assigned to Haitang Garden East Gate |
+| `station.canal@swaploop.test`   | `STATION_ADMIN`  | Assigned to Canal View Delivery Hub  |
+| `accountant@swaploop.test`      | `ACCOUNTANT`     | Finance only                         |
+| `suspended.admin@swaploop.test` | `PLATFORM_ADMIN` | Suspended — sign-in must fail        |
+
+- Seeded staff password (all accounts): `password123`. Hashes in the seed are bcrypt; you may re-hash to match your stack if you update the seed accordingly.
 
 ### Subscription billing (overview)
 
@@ -98,20 +95,38 @@ erDiagram
 
 ### Authentication and application shell
 
+#### Sign in and Sign Out
+
 - Staff sign in with email and password against `staff_users`, using a server-side session.
 - Invalid credentials show a clear error. Suspended accounts cannot sign in and show a distinct suspended message.
 - Signed-in users can sign out.
-- The shell shows the product name **SwapLoop Admin**, the current user’s name and role, navigation limited to what that role may use, and a sign-out control.
-- A simple dashboard summarises counts relevant to the signed-in role (network-wide for platform; own partner for fleet managers; assigned stations/units for station admins; finance entry point for accountants).
+- After authentication, the user should be redirected to the Dashboard page.
 
-### Access control
+#### Application Shell
 
-- `PLATFORM_ADMIN`: staff, stations, units, partners, drivers, partner billing, finance report.
-- `FLEET_MANAGER`: own partner’s drivers and own partner’s billing only.
-- `STATION_ADMIN`: assigned stations and their units only; may not create new stations.
-- `ACCOUNTANT`: finance report and CSV only (read-only).
+After successful login, the shell shows:
+
+- a header with the product name **SwapLoop Admin**, the current user’s name and role.
+- a navigation menu in the left sidebar
+- main area for the different admin contents
+
+#### Navigation, User Roles and Access Control
+
+- Navigation access limited to a sign-out control and what that role may use:
+
+| Role             | Allowed areas                                                                                                                                                                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PLATFORM_ADMIN` | Dashboard (network-wide); Staff users (list/create/edit); Stations (list/create/edit); Units (list/create/edit); Partners (list/create/edit); Drivers (all partners); Partner billing summary (any partner); Finance report (table, chart, CSV) |
+| `FLEET_MANAGER`  | Dashboard (own partner); Drivers (own partner only: list/create/edit); Partner billing summary (own partner only)                                                                                                                               |
+| `STATION_ADMIN`  | Dashboard (assigned stations/units); Stations (assigned only: list/edit — no create); Units under assigned stations (list/create/edit)                                                                                                          |
+| `ACCOUNTANT`     | Dashboard (finance entry point); Finance report only (table, chart, CSV — read-only)                                                                                                                                                            |
+
 - Unauthenticated visitors only reach the login experience.
-- Cross-scope requests show the access-denied wireframe and must not expose foreign data in lists.
+- **Cross-scope requests show the access-denied wireframe and must not expose foreign data in lists.**
+
+### Dashboard page
+
+- A simple dashboard summarises counts relevant to the signed-in role (network-wide for platform; own partner for fleet managers; assigned stations/units for station admins; finance entry point for accountants).
 
 ### List pages
 
@@ -191,15 +206,19 @@ Accountants and platform admins can open a network finance view for a selected m
 
 Assessment uses the seeded database, the wireframes, and expert / scripted walkthroughs. Evaluators will check role scoping, CRUD behaviour, aggregation of usage events into monthly billing, correct application of each partner’s plan and discount tiers, the finance table/chart/CSV, and access-denied behaviour.
 
+Assessment walkthroughs will be performed in Google Chrome using the seeded staff accounts and the shared password `password123`.
+
 ## Mark distribution
 
-| WSOS SECTION | Description | Points |
-| ------------ | ----------- | ------ |
-| 1 | Work organization and self-management | 2 |
-| 2 | Communication and interpersonal skills | 3 |
-| 3 | Design Implementation | 10 |
-| 4 | Front-End Development | 35 |
-| 5 | Back-End Development | 50 |
-| **Total** | | **100** |
+The mark distribution for this project is as follows:
 
-Final criterion-level marks live in [`marking/marking-scheme.json`](./marking/marking-scheme.json) (updated in a separate process).
+| WSOS SECTION | Description                            | Points |
+| ------------ | -------------------------------------- | ------ |
+| 1            | Work organization and self-management  | 1.5    |
+| 2            | Communication and interpersonal skills | 1.5    |
+| 3            | Design Implementation                  | 2.5    |
+| 4            | Front-End Development                  | 3.25   |
+| 5            | Back-End Development                   | 8.25   |
+| **Total**    |                                        | **17** |
+
+Final criterion-level marks live in [`marking/marking-scheme.json`](./marking/marking-scheme.json).

@@ -1,5 +1,5 @@
 {
-  "totalMark": 100,
+  "totalMark": 17,
   "wsosSections": {
     "1": "Work organization and self-management",
     "2": "Communication and interpersonal skills",
@@ -14,7 +14,7 @@
         {
           "type": "measurement",
           "description": "Application runs against the provided swaploop_admin MySQL seed",
-          "maxMark": 1,
+          "maxMark": 0.5,
           "wsosSection": 1,
           "extraDescription": "Test: Import assets/db/swaploop_admin.sql into MySQL database swaploop_admin and start the app. Seeded staff accounts (e.g. admin@swaploop.test / password123) can be used for sign-in.",
           "calculation": {
@@ -40,10 +40,10 @@
       "aspects": [
         {
           "type": "measurement",
-          "description": "Staff can sign in with email and password against staff_users",
-          "maxMark": 1,
+          "description": "Staff can sign in with email and password using a server-side session",
+          "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Sign in as admin@swaploop.test with password123. Authentication succeeds against staff_users and a signed-in session is established.",
+          "extraDescription": "Test: Sign in as admin@swaploop.test with password123. Authentication succeeds against staff_users and subsequent requests stay authenticated via cookie/session.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -51,7 +51,7 @@
         {
           "type": "measurement",
           "description": "Invalid credentials show a clear error message",
-          "maxMark": 1,
+          "maxMark": 0.5,
           "wsosSection": 2,
           "extraDescription": "Test: Submit a wrong password for a known email. A clear error is shown and no session is created.",
           "calculation": {
@@ -61,7 +61,7 @@
         {
           "type": "measurement",
           "description": "Suspended accounts cannot sign in",
-          "maxMark": 1,
+          "maxMark": 0.5,
           "wsosSection": 5,
           "extraDescription": "Test: Sign in as suspended.admin@swaploop.test with password123. Sign-in fails and no authenticated session is created.",
           "calculation": {
@@ -71,7 +71,7 @@
         {
           "type": "measurement",
           "description": "Suspended sign-in shows a distinct suspended message",
-          "maxMark": 1,
+          "maxMark": 0.25,
           "wsosSection": 2,
           "extraDescription": "Test: Attempt suspended.admin@swaploop.test / password123. The message is distinct from a generic invalid-credentials error.",
           "calculation": {
@@ -80,30 +80,10 @@
         },
         {
           "type": "measurement",
-          "description": "Authentication uses a server-side session",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: After login, subsequent requests stay authenticated via cookie/session. Clearing the session cookie forces re-login.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
           "description": "Signed-in users can sign out",
-          "maxMark": 1,
+          "maxMark": 0.25,
           "wsosSection": 5,
           "extraDescription": "Test: Sign in, then sign out. The session ends and protected pages require login again.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Unauthenticated visitors only reach the login experience",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: While signed out, open dashboard and staff/station URLs directly. Each redirects to or only shows login.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -111,24 +91,24 @@
       ]
     },
     {
-      "name": "Application shell and role dashboard",
+      "name": "Application shell, navigation, and access control",
       "aspects": [
         {
           "type": "measurement",
-          "description": "Shell shows product name SwapLoop Admin",
-          "maxMark": 0.5,
+          "description": "Shell shows SwapLoop Admin, current user name and role, and a sign-out control",
+          "maxMark": 0.25,
           "wsosSection": 4,
-          "extraDescription": "Test: After login, signed-in chrome shows product name SwapLoop Admin.",
+          "extraDescription": "Test: After login, the signed-in chrome shows product name SwapLoop Admin, the current user's name and role, and a working sign-out control.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Shell shows the current user name and role",
-          "maxMark": 1,
+          "description": "Successful sign-in redirects the user to the Dashboard page",
+          "maxMark": 0.25,
           "wsosSection": 4,
-          "extraDescription": "Test: Sign in as admin@swaploop.test and accountant@swaploop.test. Header shows that user's name and role.",
+          "extraDescription": "Test: Submit valid credentials from the sign-in page. Authentication succeeds and the user is redirected to the role-appropriate Dashboard page.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -136,174 +116,49 @@
         {
           "type": "measurement",
           "description": "Navigation is limited to what the signed-in role may use",
-          "maxMark": 2,
-          "wsosSection": 4,
-          "extraDescription": "Test: Compare nav for PLATFORM_ADMIN, FLEET_MANAGER, STATION_ADMIN, and ACCOUNTANT. Each role only sees links for areas it may use.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Shell includes a sign-out control",
           "maxMark": 0.5,
           "wsosSection": 4,
-          "extraDescription": "Test: Signed-in shell provides a visible sign-out control.",
+          "extraDescription": "Test: Compare nav for PLATFORM_ADMIN, FLEET_MANAGER, STATION_ADMIN, and ACCOUNTANT against the Allowed areas table. Only permitted destinations appear.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "PLATFORM_ADMIN dashboard summarises network-relevant counts",
-          "maxMark": 1.5,
+          "description": "Dashboard summarises counts relevant to the signed-in role",
+          "maxMark": 0.25,
           "wsosSection": 4,
-          "extraDescription": "Test: As admin@swaploop.test, dashboard shows network-wide summary counts relevant to platform admin.",
+          "extraDescription": "Test: PLATFORM_ADMIN sees network-wide counts; FLEET_MANAGER own partner; STATION_ADMIN assigned stations/units; ACCOUNTANT a finance entry point.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "FLEET_MANAGER dashboard summarises own partner scope",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: As fleet.swift@swaploop.test, dashboard summarises that partner's scope, not other partners' data.",
+          "description": "Unauthenticated visitors only reach the login experience",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Test: Open a protected URL while signed out. The app shows login and does not render protected admin content.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "STATION_ADMIN dashboard summarises assigned stations and units",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: As station.east@swaploop.test, dashboard reflects assigned station(s)/units only.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "ACCOUNTANT dashboard provides a finance entry point",
-          "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: As accountant@swaploop.test, landing clearly leads to the finance report.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Login page layout matches the login wireframe",
-          "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Compare login page to assets/wireframes/login.svg — email, password, and submit controls are present in a matching layout.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Dashboard layout matches the dashboard wireframe",
-          "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: As PLATFORM_ADMIN, compare dashboard to assets/wireframes/dashboard.svg.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Access control and scoping",
-      "aspects": [
-        {
-          "type": "measurement",
-          "description": "PLATFORM_ADMIN can access staff, stations, units, partners, drivers, billing, and finance",
+          "description": "Role scopes are enforced server-side on lists and mutations",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: As admin@swaploop.test, each listed area is reachable and usable.",
+          "extraDescription": "Test: As FLEET_MANAGER, STATION_ADMIN, and ACCOUNTANT, attempt out-of-scope list/create/edit URLs or form posts. Actions fail even if UI controls are bypassed; ACCOUNTANT finance is read-only.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "FLEET_MANAGER can only access own partner drivers and own partner billing",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: As fleet.swift@swaploop.test, SwiftRice drivers/billing work; staff, stations CRUD, other partners, and foreign billing do not.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "STATION_ADMIN is limited to assigned stations and their units",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: As station.east@swaploop.test, only assigned station(s) and their units are manageable.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "STATION_ADMIN cannot create new stations",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: As station.east@swaploop.test, create-station is unavailable or the mutation is rejected.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "ACCOUNTANT can only use finance report and CSV (read-only)",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: As accountant@swaploop.test, finance works; staff/station/partner/driver mutation screens are inaccessible.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Cross-scope requests show the access-denied experience",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: Open an out-of-scope resource URL as a scoped user. The access-denied page/wireframe is shown.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Cross-scope lists do not expose foreign data",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: As fleet.blue@swaploop.test, driver list is BlueCrane-only. As station.canal@swaploop.test, unassigned stations/units are omitted.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Access-denied page matches the access-denied wireframe",
-          "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Trigger access denied and compare to assets/wireframes/access-denied.svg.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Server-side enforcement blocks out-of-scope mutations even without UI controls",
+          "description": "Cross-scope requests show access-denied and hide foreign data",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Submit a crafted POST/PUT for an out-of-scope entity while signed in as a scoped role. Server rejects it; foreign data is unchanged.",
+          "extraDescription": "Test: Open another partner's or station's resource as a scoped role. Access-denied wireframe appears and lists never include foreign rows.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -315,100 +170,30 @@
       "aspects": [
         {
           "type": "measurement",
-          "description": "PLATFORM_ADMIN staff list page is implemented",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: As admin@swaploop.test, open staff list and see seeded staff rows.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "PLATFORM_ADMIN can create a staff account with password",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: Create a staff user with email, password, role, and role-specific fields. User appears in the list and can sign in.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "PLATFORM_ADMIN can edit an existing staff account",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: Edit a staff user's name or status and save. Changes persist on reload.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Staff role is exactly one of the four defined roles",
+          "description": "PLATFORM_ADMIN can create and edit staff accounts with password rules",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Create/edit only allows PLATFORM_ADMIN, FLEET_MANAGER, STATION_ADMIN, ACCOUNTANT — one role per user.",
+          "extraDescription": "Test: Create a staff user with a password. Edit the same user leaving password blank — existing hash remains and the account still signs in with the old password.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Fleet managers require a partner; other roles must not carry a partner",
-          "maxMark": 1,
+          "description": "Staff role, partner, and station assignment rules are enforced",
+          "maxMark": 0.3,
           "wsosSection": 5,
-          "extraDescription": "Test: FLEET_MANAGER without partner fails. Non–fleet-manager roles with a partner fail or partner is cleared.",
+          "extraDescription": "Test: Assign exactly one of the four roles. Fleet managers require a partner; other roles must not carry one. Station admins require at least one station assignment; other roles must not carry station assignments.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Station admins require at least one station assignment; other roles must not",
-          "maxMark": 1,
+          "description": "A platform admin cannot suspend their own account",
+          "maxMark": 0.2,
           "wsosSection": 5,
-          "extraDescription": "Test: STATION_ADMIN with zero stations fails. Non–station-admin roles with station assignments fail or are rejected.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Staff status supports active and suspended",
-          "maxMark": 0.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: Toggle a staff user between active and suspended; list/detail reflect the status.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Platform admin cannot suspend their own account",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: As admin@swaploop.test, attempt to suspend that same account. Action is blocked.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Leaving password blank on edit keeps the existing hash",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: Edit a user, leave password blank, save. Previous password still works.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Staff create/edit form fields match the staff-form wireframe",
-          "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Compare staff form to assets/wireframes/staff-form.svg for role, partner, station assignment, status, and password fields.",
+          "extraDescription": "Test: Sign in as a PLATFORM_ADMIN and attempt to suspend the same account. The update is rejected and the account remains active.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -416,179 +201,74 @@
       ]
     },
     {
-      "name": "Stations CRUD and lifecycle",
+      "name": "Stations and units",
       "aspects": [
         {
           "type": "measurement",
-          "description": "Stations list page is implemented for in-scope users",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: As PLATFORM_ADMIN, stations list shows seeded stations. As STATION_ADMIN, only assigned stations appear.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Only PLATFORM_ADMIN can create stations",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: As admin@swaploop.test create a station successfully. As station.east@swaploop.test, create is unavailable or rejected.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Station can be edited within allowed lifecycle rules",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: Edit an ACTIVE station's address/name and save. Changes persist.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Station type is SWAP, CHARGING, or HYBRID",
+          "description": "Station lifecycle transitions are enforced",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Form only accepts those three types; saved value persists.",
+          "extraDescription": "Test: Exercise PLANNED→ACTIVE/DECOMMISSIONED, ACTIVE→SUSPENDED/DECOMMISSIONED, and SUSPENDED→ACTIVE/DECOMMISSIONED. DECOMMISSIONED accepts no further changes. New stations start only as PLANNED or ACTIVE.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "New stations may start only as PLANNED or ACTIVE",
-          "maxMark": 1,
+          "description": "Station suspension reasons follow the status rules",
+          "maxMark": 0.25,
           "wsosSection": 5,
-          "extraDescription": "Test: Creating as SUSPENDED or DECOMMISSIONED is rejected; PLANNED and ACTIVE succeed.",
+          "extraDescription": "Test: Set a station to SUSPENDED without a reason and confirm the update is rejected. Set a reason and confirm it succeeds. Change to a non-suspended status and confirm no suspension reason is retained.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Allowed lifecycle transitions are enforced",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: PLANNED→ACTIVE/DECOMMISSIONED; ACTIVE→SUSPENDED/DECOMMISSIONED; SUSPENDED→ACTIVE/DECOMMISSIONED. Disallowed transitions are rejected.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "DECOMMISSIONED stations accept no further changes",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: After DECOMMISSIONED, further edits/status changes fail.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Suspended stations require a reason; non-suspended must not keep one",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: SUSPENDED without reason fails. With reason succeeds. Returning to ACTIVE clears/forbids keeping a suspension reason.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Station form fields match the station-form wireframe",
+          "description": "Only PLATFORM_ADMIN may create stations; STATION_ADMIN is limited to assigned stations",
           "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Compare station form to assets/wireframes/station-form.svg (type, lifecycle, suspension reason, address fields).",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Units CRUD and compatibility rules",
-      "aspects": [
-        {
-          "type": "measurement",
-          "description": "Units list page is implemented for in-scope stations",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: As PLATFORM_ADMIN or assigned STATION_ADMIN, open units list for an in-scope station and see existing units.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "In-scope users can create and edit units under their stations",
-          "maxMark": 1,
           "wsosSection": 5,
-          "extraDescription": "Test: Create and edit a unit on an in-scope station. Changes persist. Out-of-scope stations reject unit mutations.",
+          "extraDescription": "Test: STATION_ADMIN cannot create stations and can only list/edit assigned stations. PLATFORM_ADMIN can create and manage any station.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Unit status is AVAILABLE or BLOCKED; blocked requires a reason",
-          "maxMark": 1,
+          "description": "Unit type fields follow compatibility rules",
+          "maxMark": 0.2,
           "wsosSection": 5,
-          "extraDescription": "Test: BLOCKED without reason fails. With reason succeeds. AVAILABLE does not keep a block reason.",
+          "extraDescription": "Test: Create or edit a SWAP_BAY and confirm battery_type is required while connector_type is rejected. For a BIKE_BAY, confirm connector_type is required while battery_type is rejected.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "SWAP_BAY requires battery type and must not have connector type",
-          "maxMark": 1,
+          "description": "Unit labels are unique within each station",
+          "maxMark": 0.15,
           "wsosSection": 5,
-          "extraDescription": "Test: Create SWAP_BAY with battery_type SL-48 or SL-60 and no connector. Wrong combination is rejected.",
+          "extraDescription": "Test: Create two units with the same label in one station and confirm the duplicate is rejected. Confirm the same label can be used at a different station.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "BIKE_BAY requires connector type and must not have battery type",
-          "maxMark": 1,
+          "description": "Station type limits which unit types it may contain",
+          "maxMark": 0.2,
           "wsosSection": 5,
-          "extraDescription": "Test: Create BIKE_BAY with connector_type GB-AC-48 or GB-AC-60 and no battery type. Wrong combination is rejected.",
+          "extraDescription": "Test: Confirm SWAP stations accept only SWAP_BAY units, CHARGING stations accept only BIKE_BAY units, and HYBRID stations accept both types.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Unit labels are unique within a station",
-          "maxMark": 1,
+          "description": "Blocked units require a reason",
+          "maxMark": 0.2,
           "wsosSection": 5,
-          "extraDescription": "Test: Two units on the same station with the same label — second create/update is rejected.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Station type constrains allowed unit kinds",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: SWAP stations only SWAP_BAY; CHARGING only BIKE_BAY; HYBRID both. Wrong kind is rejected.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Unit form fields match the unit-form wireframe",
-          "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Compare unit form to assets/wireframes/unit-form.svg (kind, status, battery/connector, block reason).",
+          "extraDescription": "Test: Set a unit to BLOCKED without a reason and confirm the update is rejected. Provide a reason and confirm the update succeeds.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -600,80 +280,20 @@
       "aspects": [
         {
           "type": "measurement",
-          "description": "Partners and drivers list pages are implemented",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: As PLATFORM_ADMIN, open partner-list and driver-list screens and see seeded rows.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "PLATFORM_ADMIN can create and edit delivery partners",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: Create/edit a partner with name, status, contact, fleet size, and subscription plan. Changes persist.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Partner is assigned a subscription plan from the database",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: Partner form lists plans from subscription_plans. Saving assigns plan_id from the database.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "PLATFORM_ADMIN manages all drivers; FLEET_MANAGER only own partner drivers",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: Admin manages drivers across partners. fleet.swift@swaploop.test only manages SwiftRice drivers.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Driver employee code is unique per partner",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: Same employee code twice on one partner is rejected.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Driver email is unique",
+          "description": "PLATFORM_ADMIN can manage partners with a subscription plan from the database",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Creating a driver with an already-used email fails.",
+          "extraDescription": "Test: Create/edit a partner (name, status, contact, fleet size) and assign a subscription plan loaded from the seed — not hard-coded plan ids in source.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Driver status supports active and suspended",
+          "description": "Drivers are scoped by role with unique employee code and email",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Set a driver to suspended and back to active; list reflects status.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Partner and driver forms match their wireframes",
-          "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Compare partner-form.svg and driver-form.svg to implemented forms.",
+          "extraDescription": "Test: PLATFORM_ADMIN manages all drivers; FLEET_MANAGER only own partner. Employee code unique per partner; email unique; status active/suspended.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -681,44 +301,24 @@
       ]
     },
     {
-      "name": "Partner billing summary",
+      "name": "Partner billing and finance report",
       "aspects": [
         {
           "type": "measurement",
-          "description": "Billing summary opens for a partner and selected calendar month with correct scope",
-          "maxMark": 1,
+          "description": "Billing summary aggregates usage_events for the selected Asia/Shanghai calendar month",
+          "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: PLATFORM_ADMIN can open any partner's billing. FLEET_MANAGER only their own. Month selector uses calendar months.",
+          "extraDescription": "Test: Open billing for a seeded partner and a month that has usage_events. Completed-use count matches events whose completed_at falls in that Asia/Shanghai calendar month. PLATFORM_ADMIN any partner; FLEET_MANAGER own only.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Monthly completed uses are aggregated from usage_events in Asia/Shanghai",
-          "maxMark": 1.5,
+          "description": "Billing applies plan base fee, quota, overage, and volume discount from the database",
+          "maxMark": 0.75,
           "wsosSection": 5,
-          "extraDescription": "Test: For a seeded partner/month (July or August 2026), displayed use count matches events whose completed_at falls in that Asia/Shanghai calendar month.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Billing applies plan monthly base fee, included quota, and overage rate from the database",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: Breakdown matches the partner's subscription_plans row (e.g. plan-001: 5000 / 400 / 5). Overage uses = max(0, uses − quota).",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Volume discount tier matches monthly usage and reduces overage only",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: Pick a partner/month in a known discount_tiers band. Discount percent matches that tier and applies only to overage; base fee stays undiscounted.",
+          "extraDescription": "Test: Fees, quota, overage rate, and matching discount tier come from subscription_plans / discount_tiers. Discount reduces overage only; base fee stays undiscounted. Amounts are whole CNY yuan.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -726,29 +326,39 @@
         {
           "type": "measurement",
           "description": "Billing breakdown shows partner, period, plan, uses, quota, overage, fees, discount, and total",
-          "maxMark": 1.5,
+          "maxMark": 0.5,
           "wsosSection": 4,
-          "extraDescription": "Test: Billing summary includes each field as in assets/wireframes/billing-summary.svg.",
+          "extraDescription": "Test: On the billing summary screen, all listed fields are visible and match the calculated values for the selected partner and month.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Billing amounts are whole CNY yuan",
+          "description": "Finance report table has one row per partner plus a network total matching billing rules",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Displayed monetary amounts are whole yuan (no fractional fen).",
+          "extraDescription": "Test: As ACCOUNTANT or PLATFORM_ADMIN, open finance for a month. Each partner row matches that partner's billing summary fields; a network total is shown.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Commercial numbers come from the database seed, not hard-coded application constants",
+          "description": "Finance report includes a vertical bar chart without an external chart library",
           "maxMark": 0.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: Billing figures match seed plan/tier values; commercial numbers are read from the database rather than hard-coded as the only source of truth.",
+          "wsosSection": 4,
+          "extraDescription": "Test: Chart shows each partner's total for the month. Implementation uses SVG/canvas or equivalent without a third-party chart library.",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Finance CSV export is UTF-8 with header row, deterministic columns, and period in the filename",
+          "maxMark": 0.5,
+          "wsosSection": 4,
+          "extraDescription": "Test: Export CSV for a selected month. File is UTF-8, includes a header row, column order is stable, and the filename identifies the billing period.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -756,214 +366,44 @@
       ]
     },
     {
-      "name": "Finance report, chart, and CSV export",
+      "name": "List pages, forms, and accessibility",
       "aspects": [
         {
           "type": "measurement",
-          "description": "Accountants and platform admins can open the network finance view for a selected month",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "Test: As accountant@swaploop.test and admin@swaploop.test, open finance for a month. Fleet/station roles cannot.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Finance table has one row per partner plus a network total",
-          "maxMark": 1.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Table lists each partner for the month and a network total row, matching finance-report wireframe structure.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Finance row calculations match the partner billing summary rules",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: For the same partner and month, finance figures match the partner billing summary.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Vertical bar chart shows each partner total without an external chart library",
-          "maxMark": 2,
-          "wsosSection": 4,
-          "extraDescription": "Test: Finance page renders a vertical bar chart via SVG/canvas/custom drawing — not a third-party chart library.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Chart covers every partner total for the selected month",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: Each partner finance row has a corresponding bar for that partner's total.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "CSV export downloads per-partner rows as UTF-8 with a header row",
-          "maxMark": 1.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: Export CSV for a month. File is UTF-8, has a header row, and one data row per partner.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "CSV column order is deterministic",
-          "maxMark": 0.5,
-          "wsosSection": 5,
-          "extraDescription": "Test: Export twice for the same month; column order is identical.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "CSV filename identifies the billing period",
+          "description": "Index lists support filtering, page size 10, and distinct empty states",
           "maxMark": 0.5,
           "wsosSection": 4,
-          "extraDescription": "Test: Filename includes the selected year-month (or equivalent period identifier).",
+          "extraDescription": "Test: On staff, stations, units, partners, and drivers indexes: filters work; pagination uses page size 10; empty-in-scope differs from no-filter-matches.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
-        {
-          "type": "measurement",
-          "description": "Finance report layout matches the finance-report wireframe",
-          "maxMark": 0.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Compare table, chart, month selector, and CSV control placement to assets/wireframes/finance-report.svg.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        }
-      ]
-    },
-    {
-      "name": "List pages: filters, pagination, and empty states",
-      "aspects": [
-        {
-          "type": "measurement",
-          "description": "Staff, stations, units, partners, and drivers lists support basic filtering",
-          "maxMark": 2,
-          "wsosSection": 4,
-          "extraDescription": "Test: On each index, apply at least one relevant filter (search/name, status, type/role, partner or station where applicable). Results narrow correctly.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Index lists paginate with page size 10",
-          "maxMark": 1.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: On a list with more than 10 in-scope rows, page size is 10 and page navigation works.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Pagination controls are available when a list spans multiple pages",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: On a multi-page list, next/previous or page controls advance through pages.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Distinct empty state when there are no records in scope",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: Empty scope shows copy indicating no records in scope — not a filter miss.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Distinct empty state when filters match nothing",
-          "maxMark": 1,
-          "wsosSection": 4,
-          "extraDescription": "Test: Filters matching zero rows while records exist in scope show a no-matches empty state.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "List queries respect role scope so out-of-scope rows never appear",
-          "maxMark": 1.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Fleet and station admin lists never show foreign partner/station rows even when searching broadly.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Forms, validation feedback, and accessibility",
-      "aspects": [
         {
           "type": "measurement",
           "description": "Invalid form submissions show field-level errors from server-side validation",
-          "maxMark": 1,
+          "maxMark": 0.75,
           "wsosSection": 2,
-          "extraDescription": "Test: Submit CRUD forms with missing required fields. Per-field errors appear after server validation; invalid data is not saved.",
+          "extraDescription": "Test: Submit an invalid create/edit form (e.g. missing required field). Server-side validation returns the form with field-level errors.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Status and errors are understandable without relying on colour alone",
-          "maxMark": 1,
+          "description": "Form controls have labels; status and errors are understandable without colour alone",
+          "maxMark": 0.3,
           "wsosSection": 3,
-          "extraDescription": "Test: Error and status cues include text/icons/labels, not colour-only indicators.",
+          "extraDescription": "Test: Forms expose associated labels. Status values and validation errors include text (or equivalent non-colour cue), not colour alone.",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "List and detail status values include text labels, not colour alone",
-          "maxMark": 1,
+          "description": "Form focus order follows the provided wireframes",
+          "maxMark": 0.2,
           "wsosSection": 3,
-          "extraDescription": "Test: On staff/station/unit/driver lists, statuses are readable as text (or text+icon), not only by colour.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Form controls have associated labels",
-          "maxMark": 1,
-          "wsosSection": 3,
-          "extraDescription": "Test: On login and at least two CRUD forms, inputs have visible/programmatic labels.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Keyboard focus order follows the wireframe field order",
-          "maxMark": 1,
-          "wsosSection": 3,
-          "extraDescription": "Test: Tab through login and one create form; focus order matches wireframe field order.",
+          "extraDescription": "Test: Use only Tab and Shift+Tab on the primary create and edit forms. Focus moves through controls in the same logical order as their placement in the corresponding wireframes, without skipping or trapping interactive elements.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -975,69 +415,27 @@
       "aspects": [
         {
           "type": "judgement",
-          "description": "Overall visual design quality of the admin console",
-          "maxMark": 2,
-          "wsosSection": 3,
-          "judgementScoreDescription": [
-            "Layout is incomplete or visually inconsistent; hard to use",
-            "Basic readable layout with limited visual polish",
-            "Clear, consistent admin UI with good spacing, typography, and hierarchy",
-            "Polished, professional admin design that strongly supports efficient staff workflows"
-          ]
-        },
-        {
-          "type": "judgement",
           "description": "Screen layouts match the provided wireframes",
-          "maxMark": 2,
+          "maxMark": 1,
           "wsosSection": 3,
           "judgementScoreDescription": [
-            "Screens diverge substantially from wireframes; key regions missing",
-            "Main regions present but field placement often differs",
-            "Layouts closely follow wireframe structure and field placement on most screens",
-            "Excellent fidelity to wireframes across shell, lists, forms, billing, and finance screens"
+            "Layouts ignore wireframes; major screens missing or unrelated",
+            "Some screens loosely follow wireframes but field placement and structure often diverge",
+            "Primary screens follow wireframe structure and field placement with minor gaps",
+            "Layouts consistently match wireframes across shell, lists, forms, billing, and finance"
           ]
         },
         {
           "type": "judgement",
-          "description": "Usability of primary admin workflows",
-          "maxMark": 2,
+          "description": "Overall visual design quality and usability of the admin console",
+          "maxMark": 1,
           "wsosSection": 3,
           "judgementScoreDescription": [
-            "Workflows are confusing; frequent dead-ends or unclear next steps",
-            "Main CRUD paths work but navigation and feedback are uneven",
-            "Clear paths for list → create/edit → save with understandable feedback",
-            "Excellent usability: efficient navigation, clear actions, and confident completion of admin tasks"
+            "Poor visual hierarchy; workflows are hard to follow",
+            "Basic usable UI with uneven spacing, typography, or navigation clarity",
+            "Clear hierarchy and usable primary workflows across roles",
+            "Polished, consistent admin UX with strong hierarchy and efficient role workflows"
           ]
-        },
-        {
-          "type": "measurement",
-          "description": "Signed-in chrome (header/nav) is consistent across authenticated pages",
-          "maxMark": 1.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Navigate between dashboard, a list, a form, and finance as admin. Shell regions remain consistent.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "List and form screens expose the fields indicated by the wireframes",
-          "maxMark": 1.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Spot-check staff, station, billing-summary, and finance-report screens against assets/wireframes for required fields/controls.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Finance and billing screens present amounts and breakdowns clearly",
-          "maxMark": 1.5,
-          "wsosSection": 4,
-          "extraDescription": "Test: Billing summary and finance table present numeric breakdowns in a scannable labeled layout.",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
         }
       ]
     }

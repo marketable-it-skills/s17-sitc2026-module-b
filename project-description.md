@@ -64,7 +64,24 @@ Compatibility codes used in the seed:
 | `accountant@swaploop.test`      | `ACCOUNTANT`     | Finance only                         |
 | `suspended.admin@swaploop.test` | `PLATFORM_ADMIN` | Suspended — sign-in must fail        |
 
-- Seeded staff password (all accounts): `password123`. Hashes in the seed are bcrypt; you may re-hash to match your stack if you update the seed accordingly.
+- Seeded staff password (all accounts): `password123`. Seeded `password_hash` values are bcrypt. Verify them with bcrypt. Do not replace them with another hashing algorithm.
+
+If you use node.js, you can use the `bcryptjs` library to verify and store passwords:
+
+```js
+import bcrypt from 'bcryptjs';
+
+const password = 'password123';
+const hashedPassword = bcrypt.hashSync(password, 10);
+```
+
+```js
+import bcrypt from 'bcryptjs';
+
+const isValid = bcrypt.compareSync(password, hashedPassword);
+```
+
+PHP has bcrypt support built-in.
 
 ### Subscription billing (overview)
 
@@ -76,7 +93,7 @@ Completed service activity is stored as individual **`usage_events`**. For any b
 
 ### Database structure
 
-Use the supplied dump. Do not rename tables or columns needed for assessment.
+Use the supplied dump. Do not rename tables or columns needed for assessment. Keep the seeded bcrypt `password_hash` values.
 
 ```mermaid
 erDiagram
@@ -97,7 +114,7 @@ erDiagram
 
 #### Sign in and Sign Out
 
-- Staff sign in with email and password against `staff_users`, using a server-side session.
+- Staff sign in with email and password against `staff_users`, using a server-side session. Verify passwords with bcrypt.
 - Invalid credentials show a clear error. Suspended accounts cannot sign in and show a distinct suspended message.
 - Signed-in users can sign out.
 - After authentication, the user should be redirected to the Dashboard page.
@@ -145,7 +162,7 @@ Platform admins can list, create, and edit staff accounts.
 - Fleet managers require a partner; other roles must not carry a partner.
 - Station admins require at least one station assignment; other roles must not carry station assignments.
 - Status is active or suspended. A platform admin cannot suspend their own account.
-- Password is required when creating a user; on edit, leaving password blank keeps the existing hash.
+- Password is required when creating a user; store it with bcrypt. On edit, leaving password blank keeps the existing hash; a new password must also be stored with bcrypt.
 
 ### Stations
 

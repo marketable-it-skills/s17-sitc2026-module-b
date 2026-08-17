@@ -43,7 +43,7 @@
           "description": "Staff can sign in with email and password using a server-side session",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Sign in as admin@swaploop.test with password123. Authentication succeeds against staff_users and subsequent requests stay authenticated via cookie/session.",
+          "extraDescription": "Test: Sign in as admin@swaploop.test with password123. Authentication verifies the seeded bcrypt password_hash in staff_users (no other hashing algorithm) and subsequent requests stay authenticated via cookie/session.",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -173,7 +173,7 @@
           "description": "PLATFORM_ADMIN can create and edit staff accounts with password rules",
           "maxMark": 0.5,
           "wsosSection": 5,
-          "extraDescription": "Test: Create a staff user with a password. Edit the same user leaving password blank — existing hash remains and the account still signs in with the old password.",
+          "extraDescription": "Test: Create a staff user with a password — the stored password_hash is bcrypt. Edit the same user leaving password blank — existing hash remains and the account still signs in with the old password.",
           "calculation": {
             "type": "pass-or-fail"
           }

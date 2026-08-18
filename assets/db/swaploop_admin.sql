@@ -188,13 +188,13 @@ INSERT INTO `units` (
 INSERT INTO `staff_users` (
   `id`, `email`, `password_hash`, `display_name`, `role`, `status`, `partner_id`
 ) VALUES
-  ('staff-001', 'admin@swaploop.test', '$2b$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'He Lan', 'PLATFORM_ADMIN', 'ACTIVE', NULL),
-  ('staff-002', 'fleet.swift@swaploop.test', '$2b$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Tang Yi', 'FLEET_MANAGER', 'ACTIVE', 'partner-001'),
-  ('staff-003', 'fleet.blue@swaploop.test', '$2b$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Deng Rui', 'FLEET_MANAGER', 'ACTIVE', 'partner-002'),
-  ('staff-004', 'station.east@swaploop.test', '$2b$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Mei Rong', 'STATION_ADMIN', 'ACTIVE', NULL),
-  ('staff-005', 'station.canal@swaploop.test', '$2b$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Xu Tao', 'STATION_ADMIN', 'ACTIVE', NULL),
-  ('staff-006', 'accountant@swaploop.test', '$2b$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Zhou Qing', 'ACCOUNTANT', 'ACTIVE', NULL),
-  ('staff-007', 'suspended.admin@swaploop.test', '$2b$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Qin Lu', 'PLATFORM_ADMIN', 'SUSPENDED', NULL);
+  ('staff-001', 'admin@swaploop.test', '$2y$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'He Lan', 'PLATFORM_ADMIN', 'ACTIVE', NULL),
+  ('staff-002', 'fleet.swift@swaploop.test', '$2y$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Tang Yi', 'FLEET_MANAGER', 'ACTIVE', 'partner-001'),
+  ('staff-003', 'fleet.blue@swaploop.test', '$2y$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Deng Rui', 'FLEET_MANAGER', 'ACTIVE', 'partner-002'),
+  ('staff-004', 'station.east@swaploop.test', '$2y$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Mei Rong', 'STATION_ADMIN', 'ACTIVE', NULL),
+  ('staff-005', 'station.canal@swaploop.test', '$2y$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Xu Tao', 'STATION_ADMIN', 'ACTIVE', NULL),
+  ('staff-006', 'accountant@swaploop.test', '$2y$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Zhou Qing', 'ACCOUNTANT', 'ACTIVE', NULL),
+  ('staff-007', 'suspended.admin@swaploop.test', '$2y$10$0XcesstTUTFQHFTZmq7dRurfxcNzJCN1cVctbOYYzHdUkzmOl4blO', 'Qin Lu', 'PLATFORM_ADMIN', 'SUSPENDED', NULL);
 
 INSERT INTO `staff_station_assignments` (`staff_id`, `station_id`) VALUES
   ('staff-004', 'station-001'),

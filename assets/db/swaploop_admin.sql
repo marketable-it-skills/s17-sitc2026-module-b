@@ -10,12 +10,6 @@ SET NAMES utf8mb4;
 SET time_zone = '+08:00';
 SET FOREIGN_KEY_CHECKS = 0;
 
-CREATE DATABASE IF NOT EXISTS `swaploop_admin`
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
-USE `swaploop_admin`;
-
 DROP TABLE IF EXISTS `usage_events`;
 DROP TABLE IF EXISTS `discount_tiers`;
 DROP TABLE IF EXISTS `drivers`;

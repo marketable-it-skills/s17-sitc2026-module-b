@@ -37,5 +37,7 @@
     "billing",
     "csv-export",
     "chart"
-  ]
+  ],
+  "status": "draft",
+  "publishedAt": "2026-09-01"
 }

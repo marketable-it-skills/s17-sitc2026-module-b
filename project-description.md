@@ -237,5 +237,3 @@ The mark distribution for this project is as follows:
 | 4            | Front-End Development                  | 3.25   |
 | 5            | Back-End Development                   | 8.25   |
 | **Total**    |                                        | **17** |
-
-Final criterion-level marks live in [`marking/marking-scheme.json`](./marking/marking-scheme.json).
